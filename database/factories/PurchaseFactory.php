@@ -17,10 +17,13 @@ class PurchaseFactory extends Factory
      */
     public function definition(): array
     {
-        
+        $decade = $this->faker->dateTimeThisDecade;//このままだと過去10年分のデータを作成してしまうので↓
+        $created_at = $decade->modify('+2 years');//ここで過去2年分に変更
+
         return [
             'customer_id' => rand(1, Customer::count()),
             'status' => $this->faker->boolean,
+            'created_at' => $created_at
         ];
     }
 }
