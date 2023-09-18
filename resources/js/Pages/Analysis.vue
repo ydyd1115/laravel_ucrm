@@ -4,7 +4,8 @@ import { Head } from '@inertiajs/vue3';
 import { onMounted, reactive } from 'vue';
 import { getToday} from '@/common.js'; 
 import axios from 'axios';
-import Chart from '@/Components/Chart.vue'
+import Chart from '@/Components/Chart.vue';
+import ResultTable from '@/Components/ResultTable.vue';
 
 onMounted(()=>{
     form.startDate = getToday()
@@ -32,6 +33,7 @@ const getData = async()=>{
             data.data = res.data.data,
             data.labels = res.data.labels,
             data.totals = res.data.totals
+            data.type = res.data.type
         })
     }catch(e){
         console.log(e.message)
@@ -53,13 +55,21 @@ const getData = async()=>{
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <form @submit.prevent="getData"> 
-                            From:<input type="date" name="startDate" v-model="form.startDate">
+                            <div>
+                                分析方法<br>
+                                <input type="radio" v-model="form.type" value="perDay" checked><span class="mr-2">日別</span>
+                                <input type="radio" v-model="form.type" value="perMonth" ><span class="mr-2">月別</span>
+                                <input type="radio" v-model="form.type" value="perYear" ><span class="mr-2">年別</span>
+                                <input type="radio" v-model="form.type" value="decile" ><span class="mr-2">デシル分析</span>
+                            </div>
+                            From:<input type="date" name="startDate" v-model="form.startDate"><br>
                             To:<input type="date" name="endDate" v-model="form.endDate"><br>
                             <button  class="flex mx-auto mt-8 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">分析する</button>
                         </form>
                         <Chart  v-if="data.data" :data="data"/>
+                        <ResultTable  v-if="data.type === 'decile'" :data="data"/>
                     </div>
-                    <div v-if="data.data" class="lg:w-2/3 w-full mx-auto my-8 overflow-auto">
+                    <div v-if="data.type === 'perDay' || data.type === 'perMonth' || data.type ==='perYear'" class="lg:w-2/3 w-full mx-auto my-8 overflow-auto">
                         <table class="table-auto w-full text-left whitespace-no-wrap">
                             <thead>
                             <tr>
