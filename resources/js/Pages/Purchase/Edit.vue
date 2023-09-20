@@ -4,7 +4,6 @@ import { Head } from '@inertiajs/vue3';
 import {getToday} from '@/common'
 import {Inertia} from '@inertiajs/inertia';
 import {onMounted ,reactive,ref,computed} from 'vue';
-import MicroModal from '@/Components/MicroModal.vue';
 import dayjs from 'dayjs';
 
 onMounted(() => {

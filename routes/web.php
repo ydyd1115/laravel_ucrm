@@ -26,6 +26,7 @@ Route::resource('customers',CustomerController::class)->middleware(['auth','veri
 Route::resource('purchases',PurchaseController::class)->middleware(['auth','verified']);
 Route::get('analysis',[AnalysisController::class,'index'])->name('analysis');
 Route::get('decile',[AnalysisController::class,'decile']);
+Route::get('rfm',[AnalysisController::class,'rfm']);
 
 Route::get('/inertia-test', function () {
     return Inertia::render('InertiaTests');
