@@ -67,7 +67,7 @@ const props = defineProps({
                 </tbody>
             </table>
         </div>
-        <h2 class="text-center">RF分布</h2>
+        <h2 class="text-center">RF</h2>
         <table  class="table-auto w-full text-left whitespace-no-wrap">
             <thead>
             <tr>
